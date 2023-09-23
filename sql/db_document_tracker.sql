@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3306
--- Generation Time: Sep 22, 2023 at 07:49 AM
--- Server version: 8.0.31
--- PHP Version: 8.0.26
+-- Host: 127.0.0.1
+-- Generation Time: Sep 23, 2023 at 05:30 AM
+-- Server version: 10.4.22-MariaDB
+-- PHP Version: 8.1.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -27,14 +27,12 @@ SET time_zone = "+00:00";
 -- Table structure for table `activities`
 --
 
-DROP TABLE IF EXISTS `activities`;
-CREATE TABLE IF NOT EXISTS `activities` (
-  `id` int NOT NULL AUTO_INCREMENT,
+CREATE TABLE `activities` (
+  `id` int(11) NOT NULL,
   `details` text NOT NULL,
   `department` varchar(150) NOT NULL,
-  `created` timestamp NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `created` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -42,16 +40,14 @@ CREATE TABLE IF NOT EXISTS `activities` (
 -- Table structure for table `category`
 --
 
-DROP TABLE IF EXISTS `category`;
-CREATE TABLE IF NOT EXISTS `category` (
-  `id` int NOT NULL AUTO_INCREMENT,
+CREATE TABLE `category` (
+  `id` int(11) NOT NULL,
   `category` varchar(150) NOT NULL,
   `details` text NOT NULL,
-  `max_time` int NOT NULL,
-  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `max_time` int(11) NOT NULL,
+  `created` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated` timestamp NULL DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `category`
@@ -69,19 +65,17 @@ INSERT INTO `category` (`id`, `category`, `details`, `max_time`, `created`, `upd
 -- Table structure for table `department`
 --
 
-DROP TABLE IF EXISTS `department`;
-CREATE TABLE IF NOT EXISTS `department` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `code` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `department` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `password` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `location` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `token` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `department` (
+  `id` int(11) NOT NULL,
+  `code` varchar(45) NOT NULL,
+  `department` varchar(150) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(150) NOT NULL,
+  `location` varchar(150) NOT NULL,
+  `token` varchar(10) NOT NULL,
+  `created` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `department`
@@ -159,21 +153,19 @@ INSERT INTO `department` (`id`, `code`, `department`, `username`, `password`, `l
 -- Table structure for table `documents`
 --
 
-DROP TABLE IF EXISTS `documents`;
-CREATE TABLE IF NOT EXISTS `documents` (
-  `id` int NOT NULL AUTO_INCREMENT,
+CREATE TABLE `documents` (
+  `id` int(11) NOT NULL,
   `reference` varchar(45) NOT NULL,
-  `sender` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `sender` varchar(45) NOT NULL,
   `document` varchar(45) NOT NULL,
   `type` varchar(45) NOT NULL,
   `details` text NOT NULL,
   `status` varchar(45) NOT NULL,
-  `hidden` int NOT NULL,
+  `hidden` int(11) NOT NULL,
   `date` date NOT NULL,
-  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=363 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `created` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated` timestamp NULL DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `documents`
@@ -376,7 +368,9 @@ INSERT INTO `documents` (`id`, `reference`, `sender`, `document`, `type`, `detai
 (359, '89578986', 'BAC', 'PURCHASE ORDER/REPRESENTATION ALLOWANCE', 'Voucher', 'SP OFFICE/PR NO. 2023-07-00055/ 09-21-23 = 14,940', 'Ongoing', 0, '2023-09-22', '2023-09-22 07:08:13', NULL),
 (360, '71335649', 'BAC', 'PURCHASE ORDER/RESO NO: #518 -7/10/23', 'Voucher', 'VARIOUS OFFICES/ PR # 2023-05-00065/ 05-22-23/ 300,380.85', 'Ongoing', 0, '2023-09-22', '2023-09-22 07:17:00', NULL),
 (361, '84807287', 'CITRMU', 'Purchase Request', 'Voucher', 'supplier', 'Ongoing', 0, '2023-09-22', '2023-09-22 07:31:05', NULL),
-(362, '40688971', 'BAC', 'PURCHASE REQUEST 2023-09-00058 9/19/23 = 7,88', 'Voucher', 'PURCHASE OF MEDICAL EQUIPMENT , REAGENTS AND CONSUMABLES TO BE USED AT CLINICAL CHEMISTRY SECTION OF THE DIAGNOSTIC LABORATORY', 'Ongoing', 0, '2023-09-22', '2023-09-22 07:48:56', NULL);
+(362, '40688971', 'BAC', 'PURCHASE REQUEST 2023-09-00058 9/19/23 = 7,88', 'Voucher', 'PURCHASE OF MEDICAL EQUIPMENT , REAGENTS AND CONSUMABLES TO BE USED AT CLINICAL CHEMISTRY SECTION OF THE DIAGNOSTIC LABORATORY', 'Ongoing', 0, '2023-09-22', '2023-09-22 07:48:56', NULL),
+(363, '13918476', 'CDRRMO', 'Test', 'Memo', 'Test', 'Ongoing', 0, '2023-09-23', '2023-09-23 03:23:56', NULL),
+(364, '16804633', 'CDRRMO', 'Test', 'Letter', 'Test', 'Ongoing', 0, '2023-09-23', '2023-09-23 03:24:12', NULL);
 
 -- --------------------------------------------------------
 
@@ -384,15 +378,13 @@ INSERT INTO `documents` (`id`, `reference`, `sender`, `document`, `type`, `detai
 -- Table structure for table `notifications`
 --
 
-DROP TABLE IF EXISTS `notifications`;
-CREATE TABLE IF NOT EXISTS `notifications` (
-  `id` int NOT NULL AUTO_INCREMENT,
+CREATE TABLE `notifications` (
+  `id` int(11) NOT NULL,
   `user` varchar(45) NOT NULL,
   `details` text NOT NULL,
-  `status` int NOT NULL COMMENT '0 = unread,\r\n1 = read',
-  `created` timestamp NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `status` int(11) NOT NULL COMMENT '0 = unread,\r\n1 = read',
+  `created` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -400,20 +392,18 @@ CREATE TABLE IF NOT EXISTS `notifications` (
 -- Table structure for table `tracker`
 --
 
-DROP TABLE IF EXISTS `tracker`;
-CREATE TABLE IF NOT EXISTS `tracker` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `reference` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+CREATE TABLE `tracker` (
+  `id` int(11) NOT NULL,
+  `reference` varchar(45) NOT NULL,
   `type` varchar(45) NOT NULL,
   `sender` varchar(45) NOT NULL,
-  `department` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `department` varchar(45) NOT NULL,
   `status` varchar(45) NOT NULL,
   `remarks` text NOT NULL,
   `note` text NOT NULL,
-  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=290 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `created` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated` timestamp NULL DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tracker`
@@ -644,7 +634,8 @@ INSERT INTO `tracker` (`id`, `reference`, `type`, `sender`, `department`, `statu
 (286, '16064233', 'Voucher', 'BAC', 'GSO', 'Pending', '', '', '2023-09-22 07:45:21', NULL),
 (287, '12650940', 'Voucher', 'BAC', 'GSO', 'Pending', '', '', '2023-09-22 07:45:39', NULL),
 (288, '89013244', 'Voucher', 'BAC', 'GSO', 'Pending', '', '', '2023-09-22 07:45:54', NULL),
-(289, '71335649', 'Voucher', 'BAC', 'GSO', 'Pending', '', '', '2023-09-22 07:46:22', NULL);
+(289, '71335649', 'Voucher', 'BAC', 'GSO', 'Pending', '', '', '2023-09-22 07:46:22', NULL),
+(290, '41045833', 'Voucher', 'CDRRMO', 'CDRRMO', 'Done', '', 'test', '2023-09-23 03:21:26', '2023-09-23 03:22:34');
 
 -- --------------------------------------------------------
 
@@ -652,16 +643,14 @@ INSERT INTO `tracker` (`id`, `reference`, `type`, `sender`, `department`, `statu
 -- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE IF NOT EXISTS `users` (
-  `id` int NOT NULL AUTO_INCREMENT,
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
   `username` varchar(45) NOT NULL,
   `password` varchar(150) NOT NULL,
-  `token` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `token` varchar(10) NOT NULL,
+  `created` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated` timestamp NULL DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `users`
@@ -670,6 +659,98 @@ CREATE TABLE IF NOT EXISTS `users` (
 INSERT INTO `users` (`id`, `username`, `password`, `token`, `created`, `updated`) VALUES
 (1, 'admin', '$2a$12$ua0E7Z6AT1QdHc/q2YbfUOy5BEvWLtRhBOh8BgpYlHc3j/NscgNfe', '', '2023-08-15 16:00:38', NULL),
 (6, 'test', '$2y$10$RT2UovCq.7Vtav1ReyKxheSiQ9YZqHUU8bwxMpCdTO2jLekk/wPxC', '', '2023-08-27 07:55:03', NULL);
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `activities`
+--
+ALTER TABLE `activities`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `category`
+--
+ALTER TABLE `category`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `department`
+--
+ALTER TABLE `department`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `documents`
+--
+ALTER TABLE `documents`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `notifications`
+--
+ALTER TABLE `notifications`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tracker`
+--
+ALTER TABLE `tracker`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `activities`
+--
+ALTER TABLE `activities`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `category`
+--
+ALTER TABLE `category`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `department`
+--
+ALTER TABLE `department`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+
+--
+-- AUTO_INCREMENT for table `documents`
+--
+ALTER TABLE `documents`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=365;
+
+--
+-- AUTO_INCREMENT for table `notifications`
+--
+ALTER TABLE `notifications`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tracker`
+--
+ALTER TABLE `tracker`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=291;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
